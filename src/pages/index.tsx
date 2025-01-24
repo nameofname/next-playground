@@ -11,7 +11,6 @@ const LazyTwo = dynamic(() => import('./components/LazyComponentTwo'), {
 export default function Home({ type }: { type: string}) {
   return (
     <div>
-      hey there yall
       {
         type === 'two' ? <LazyTwo string={type} /> : <LazyOne string={type} />
       }
