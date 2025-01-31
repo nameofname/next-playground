@@ -1,5 +1,11 @@
 import React, { useState, PropsWithChildren, useEffect, useMemo } from 'react';
 
+/**
+ * This file shows the pattern of using an injector component, and highlights
+ * the how memoizing the injector component changes the behavior
+ */
+
+
 const IndividualWrapper = ({ children }: PropsWithChildren) => {
     return (
         <div>
