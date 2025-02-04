@@ -74,7 +74,7 @@ export default function Home() {
     const Injector = getComponentInjector(initialData);
     return (
         <>
-            <p>This is the wrapper for the whole page</p>
+            <p>This is the wrapper for the who`le page</p>
             <Injector Component={MyComponent1} />
             {/* { initialData.foo = 'fdsa' } */}
             <Injector Component={MyComponent2} />
