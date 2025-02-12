@@ -1,4 +1,4 @@
-import React, { useState, PropsWithChildren, FC, useEffect, useMemo } from 'react';
+import React, { ComponentType, useEffect, useMemo } from 'react';
 
 /**
  * This file builds on the example in the sibling file injector.tsx, 
@@ -12,7 +12,7 @@ type DataType = {
     foo: string;
 };
 
-type InjectorType = FC<{ Component: FC<DataType> }>;
+type InjectorType = ComponentType<{ Component: ComponentType<DataType> }>;
 
 const MyComponent1 = ({ foo }: DataType) => {
     useEffect(() => {
@@ -38,7 +38,7 @@ const MyComponent2 = ({ foo }: DataType) => {
     )
 }
 
-const Injector = ({ Component, data }: { Component: FC<DataType>, data: DataType }) => {
+const Injector = ({ Component, data }: { Component: ComponentType<DataType>, data: DataType }) => {
     return (
         <div>
             <p>This is the Injector</p>
@@ -50,27 +50,15 @@ const Injector = ({ Component, data }: { Component: FC<DataType>, data: DataType
 function GetComponentInjector({ data }: { data: DataType }) {
     const [dataMemo, DecoratedInjector ] = useMemo(() => {
         console.log('inside useMemo', data);
-        const DecoratedInjector: InjectorType = ({ Component }: { Component: FC<DataType> }) => <Injector data={dataMemo} Component={Component} />
+        const DecoratedInjector: InjectorType = ({ Component }: { Component: ComponentType<DataType> }) => <Injector data={dataMemo} Component={Component} />
         return [ data, DecoratedInjector ];
     }, [data]);
 
     return <DecoratedInjector />;
 }
 
-function Home_bad() {
-    const Injector = <GetComponentInjector data={initialData} />
-    return (
-        <>
-            <p>This is the wrapper for the whole page</p>
-            <Injector Component={MyComponent1} />
-            {/* { initialData.foo = 'fdsa' } */}
-            <Injector Component={MyComponent2} />
-        </>
-    )
-}
-
 // OK let's re-think this. If I were designing it from scratch, how would it work ? 
-export default function Home({ data }) {
+export default function Home() {
     const Injector = <GetComponentInjector data={initialData} />
     return (
         <>

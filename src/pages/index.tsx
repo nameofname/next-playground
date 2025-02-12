@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic'
+import { RequestContext } from 'next/dist/server/base-server';
 
 const LazyOne = dynamic(() => import('./components/LazyComponentOne'), {
   loading: () => <p>Loading...</p>,
@@ -18,7 +19,7 @@ export default function Home({ type }: { type: string}) {
   );
 }
 
-export function getServerSideProps(context) {
+export function getServerSideProps(context: RequestContext) {
   console.log('query', context.query)
   return {
     props: { type: context.query?.type || 'one' }
